@@ -3,7 +3,9 @@ package dev.alexengrig.myhttpserver;
 import java.util.Arrays;
 
 public enum HttpStatus {
-    OK(200, "OK");
+    OK(200, "OK"),
+    NOT_FOUND(404, "Not found"),
+    INTERNAL_SERVER_ERROR(500, "Internal server error");
 
     private final int code;
     private final String definition;
