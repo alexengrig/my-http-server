@@ -1,22 +1,32 @@
 package dev.alexengrig.myhttpserver;
 
-import java.util.Objects;
-
 public class HttpResponse {
     private static final String SPACE = " ";
     private static final String NEW_LINE = "\r\n";
 
-    private final HttpVersion version;
-    private final HttpStatus status;
-    private final HttpHeaders headers;
-    private final HttpBody body;
+    private HttpVersion version;
+    private HttpStatus status;
+    private HttpHeaders headers;
+    private HttpBody body;
 
+    public void setVersion(HttpVersion version) {
+        this.version = version;
+    }
 
-    public HttpResponse(HttpVersion version, HttpStatus status, HttpHeaders headers, HttpBody body) {
-        this.version = Objects.requireNonNull(version, "Response version must not be null");
-        this.status = Objects.requireNonNull(status, "Response status must not be null");
-        this.headers = Objects.requireNonNull(headers, "Response headers must not be null");
-        this.body = Objects.requireNonNull(body, "Response body must not be null");
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
+    public void setHeaders(HttpHeaders headers) {
+        this.headers = headers;
+    }
+
+    public void setBody(HttpBody body) {
+        this.body = body;
+    }
+
+    public byte[] getBytes() {
+        return toString().getBytes();
     }
 
     @Override
