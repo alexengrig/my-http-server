@@ -19,6 +19,14 @@ public class HttpRequest {
         this.body = body;
     }
 
+    public HttpMethod getMethod() {
+        return method;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     @Override
     public String toString() {
         return message;
