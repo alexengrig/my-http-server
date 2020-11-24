@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Server {
-    public static final int BUFFER_SIZE = 256;
+    private static final int BUFFER_SIZE = 256;
+    private static final HttpRequestFactory REQUEST_FACTORY = new HttpRequestFactory();
 
     private final String host;
     private final int port;
@@ -29,6 +30,10 @@ public class Server {
         }).bootstrap();
     }
 
+    private static AsynchronousServerSocketChannel createServerChannel(String hostname, int port) throws IOException {
+        return AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(hostname, port));
+    }
+
     private static HttpRequest getRequest(AsynchronousSocketChannel readChannel)
             throws InterruptedException, ExecutionException {
         ByteBuffer byteBuffer = ByteBuffer.allocate(BUFFER_SIZE);
@@ -43,11 +48,7 @@ public class Server {
             stringBuilder.append(charBuffer);
             byteBuffer.clear();
         } while (reading);
-        return new HttpRequest(stringBuilder);
-    }
-
-    private static AsynchronousServerSocketChannel createServerChannel(String hostname, int port) throws IOException {
-        return AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(hostname, port));
+        return REQUEST_FACTORY.createRequest(stringBuilder.toString());
     }
 
     private static HttpResponse getResponse(AsynchronousSocketChannel client) {
