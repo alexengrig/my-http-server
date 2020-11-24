@@ -9,6 +9,15 @@ public enum HttpVersion {
         this.value = value;
     }
 
+    public static HttpVersion of(String version) {
+        for (HttpVersion httpVersion : values()) {
+            if (httpVersion.value.equals(version)) {
+                return httpVersion;
+            }
+        }
+        throw new IllegalArgumentException("Unknown HTTP version: " + version);
+    }
+
     @Override
     public String toString() {
         return value;
